@@ -20,6 +20,7 @@ Feel free to fork this repo. If you want to keep things private, that's understa
 - @jmatusevich
 - @falecci
 - @danfsd
+- @mssodhi
 
 ## Requirements
 
