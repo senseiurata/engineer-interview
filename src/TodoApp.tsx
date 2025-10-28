@@ -1,3 +1,4 @@
+import { FormEvent, useMemo, useState } from "react";
 import TodoSection from "./TodoSection";
 import type { TodoItem, TodoSection as TodoSectionType } from "./types";
 
@@ -6,52 +7,67 @@ const todoSections: TodoSectionType[] = [
   {
     id: 1,
     title: "Todo",
-    items: [
-      {
-        id: 1,
-        task: "Wash dishes",
-      },
-      {
-        id: 2,
-        task: "Do coding assignment",
-      },
-    ],
   },
   {
     id: 2,
     title: "In Progress",
-    items: [
-      {
-        id: 3,
-        task: "Mow the lawn",
-      },
-      {
-        id: 4,
-        task: "Pull weeds",
-      },
-      {
-        id: 5,
-        task: "Rake the leaves",
-      },
-    ],
   },
   {
     id: 3,
     title: "Done",
-    items: [
-      {
-        id: 6,
-        task: "Take a shower",
-      },
-      {
-        id: 7,
-        task: "Study JavaScript",
-      },
-    ],
   },
 ];
 
 function TodoApp() {
+  const [sectionIdToItems, setSectionIdToItems] = useState<
+    Map<number, TodoItem[]>
+  >(
+    new Map([
+      [
+        1,
+        [
+          {
+            id: 1,
+            task: "Wash dishes",
+          },
+          {
+            id: 2,
+            task: "Do coding assignment",
+          },
+        ],
+      ],
+      [
+        2,
+        [
+          {
+            id: 3,
+            task: "Mow the lawn",
+          },
+          {
+            id: 4,
+            task: "Pull weeds",
+          },
+          {
+            id: 5,
+            task: "Rake the leaves",
+          },
+        ],
+      ],
+      [
+        3,
+        [
+          {
+            id: 6,
+            task: "Take a shower",
+          },
+          {
+            id: 7,
+            task: "Study JavaScript",
+          },
+        ],
+      ],
+    ]),
+  );
   const handleAddTodo = () => {
     // TODO: Implement add todo
   };
@@ -67,27 +83,17 @@ function TodoApp() {
   return (
     <div>
       <div className="flex gap-1">
-        {todoSections.map(
-          ({
-            id,
-            title,
-            items,
-          }: {
-            id: number;
-            title: string;
-            items: TodoItem[];
-          }) => {
-            return (
-              <TodoSection
-                key={id}
-                title={title}
-                todoItems={items}
-                handleMovePrevious={handleMovePrevious}
-                handleMoveNext={handleMoveNext}
-              />
-            );
-          },
-        )}
+        {todoSections.map(({ id, title }: { id: number; title: string }) => {
+          return (
+            <TodoSection
+              key={id}
+              title={title}
+              todoItems={sectionIdToItems.get(id) ?? []}
+              handleMovePrevious={handleMovePrevious}
+              handleMoveNext={handleMoveNext}
+            />
+          );
+        })}
       </div>
       <form onSubmit={handleAddTodo}>
         <input name="todo" placeholder="Add Task" />

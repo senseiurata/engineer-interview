@@ -6,5 +6,4 @@ export type TodoItem = {
 export type TodoSection = {
   id: number;
   title: string;
-  items: TodoItem[];
 };
