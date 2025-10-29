@@ -1,8 +1,10 @@
 function TodoItem({
+  id,
   name,
   handleMovePrevious,
   handleMoveNext,
 }: {
+  id: number;
   name: string;
   handleMovePrevious?: Function;
   handleMoveNext?: Function;
@@ -10,7 +12,7 @@ function TodoItem({
   return (
     <div className="flex gap-3">
       <button
-        onClick={() => handleMovePrevious?.()}
+        onClick={handleMovePrevious?.(id)}
         aria-label="Move to previous"
         disabled={!handleMovePrevious}
         data-testid="prev-btn"
@@ -19,7 +21,7 @@ function TodoItem({
       </button>
       {name}
       <button
-        onClick={() => handleMoveNext?.()}
+        onClick={handleMoveNext?.(id)}
         aria-label="Move to next"
         disabled={!handleMoveNext}
         data-testid="next-btn"

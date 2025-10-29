@@ -19,6 +19,7 @@ function TodoSection({
       {todoItems.map((item: TodoItemType) => (
         <TodoItem
           key={item.id}
+          id={item.id}
           name={item.task}
           handleMovePrevious={handleMovePrevious}
           handleMoveNext={handleMoveNext}

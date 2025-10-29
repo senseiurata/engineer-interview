@@ -94,28 +94,78 @@ function TodoApp() {
     setNewTodo("");
   };
 
-  const handleMovePrevious = () => {
-    // TODO: Implement move to previous section
+  const getHandleMoveTodo = (id: number, getDestinationIndex: Function) => {
+    return () => {
+      const newSectionIdToItems = new Map(sectionIdToItems);
+      const sectionIds = [...newSectionIdToItems.keys()];
+
+      for (let index = 0; index < sectionIds.length; index++) {
+        const sectionId = sectionIds[index];
+        const todoItems = newSectionIdToItems.get(sectionId) || [];
+
+        const todoItemIndex = todoItems.findIndex(
+          ({ id: itemId }) => id === itemId,
+        );
+
+        if (todoItemIndex !== -1) {
+          const destinationIndex = getDestinationIndex(index);
+
+          if (destinationIndex < 0 || destinationIndex >= todoSections.length) {
+            throw new Error(
+              `destination index out of bounds: ${destinationIndex}`,
+            );
+          }
+
+          const itemToMove = todoItems[todoItemIndex];
+          todoItems.splice(todoItemIndex, 1);
+
+          const { id: destinationSectionId } = todoSections[destinationIndex];
+
+          // append todo item at end of the destination section
+          newSectionIdToItems.set(destinationSectionId, [
+            ...(sectionIdToItems.get(destinationSectionId) || []),
+            itemToMove,
+          ]);
+
+          break;
+        }
+      }
+      setSectionIdToItems(newSectionIdToItems);
+    };
   };
 
-  const handleMoveNext = () => {
-    // TODO: Implement move to next section
+  const handleMovePrevious = (id: number) => {
+    const getDestinationIndex = (index: number) => index - 1;
+
+    return getHandleMoveTodo(id, getDestinationIndex);
+  };
+
+  const handleMoveNext = (id: number) => {
+    const getDestinationIndex = (index: number) => index + 1;
+
+    return getHandleMoveTodo(id, getDestinationIndex);
   };
 
   return (
     <div>
       <div className="flex gap-1">
-        {todoSections.map(({ id, title }: { id: number; title: string }) => {
-          return (
-            <TodoSection
-              key={id}
-              title={title}
-              todoItems={sectionIdToItems.get(id) ?? []}
-              handleMovePrevious={handleMovePrevious}
-              handleMoveNext={handleMoveNext}
-            />
-          );
-        })}
+        {todoSections.map(
+          ({ id, title }: { id: number; title: string }, index: number) => {
+            return (
+              <TodoSection
+                key={id}
+                title={title}
+                todoItems={sectionIdToItems.get(id) ?? []}
+                handleMovePrevious={
+                  index !== 0 ? handleMovePrevious : undefined
+                }
+                handleMoveNext={
+                  index !== todoSections.length - 1 ? handleMoveNext : undefined
+                }
+              />
+            );
+          },
+        )}
       </div>
       <form onSubmit={handleAddTodo}>
         <input
