@@ -2,20 +2,23 @@ import { ChangeEvent, FormEvent, useMemo, useState } from "react";
 import TodoSection from "./TodoSection";
 import type { TodoItem, TodoSection as TodoSectionType } from "./types";
 
-// TODO: move dummy todo items data to state
+const SECTION_ID_TODO = 1;
+const SECTION_ID_IN_PROGRESS = 2;
+const SECTION_ID_DONE = 3;
+
 const todoSections: TodoSectionType[] = [
   {
-    id: 1,
+    id: SECTION_ID_TODO,
     slug: "todo",
-    title: "Todo",
+    title: "To Do",
   },
   {
-    id: 2,
+    id: SECTION_ID_IN_PROGRESS,
     slug: "in-progress",
     title: "In Progress",
   },
   {
-    id: 3,
+    id: SECTION_ID_DONE,
     slug: "done",
     title: "Done",
   },
@@ -28,45 +31,29 @@ function TodoApp() {
   >(
     new Map([
       [
-        1,
+        SECTION_ID_TODO,
         [
           {
             id: 1,
-            task: "Wash dishes",
-          },
-          {
-            id: 2,
-            task: "Do coding assignment",
+            task: "Mow the lawn",
           },
         ],
       ],
       [
-        2,
+        SECTION_ID_IN_PROGRESS,
+        [
+          {
+            id: 2,
+            task: "Pull weeds",
+          },
+        ],
+      ],
+      [
+        SECTION_ID_DONE,
         [
           {
             id: 3,
-            task: "Mow the lawn",
-          },
-          {
-            id: 4,
-            task: "Pull weeds",
-          },
-          {
-            id: 5,
             task: "Rake the leaves",
-          },
-        ],
-      ],
-      [
-        3,
-        [
-          {
-            id: 6,
-            task: "Take a shower",
-          },
-          {
-            id: 7,
-            task: "Study JavaScript",
           },
         ],
       ],
