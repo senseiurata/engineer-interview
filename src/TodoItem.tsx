@@ -10,7 +10,7 @@ function TodoItem({
   handleMoveNext?: Function;
 }) {
   return (
-    <div className="flex gap-3">
+    <div data-testid="todo-item" className="flex gap-3">
       <button
         onClick={handleMovePrevious?.(id)}
         aria-label="Move to previous"

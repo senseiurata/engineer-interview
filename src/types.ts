@@ -5,5 +5,6 @@ export type TodoItem = {
 
 export type TodoSection = {
   id: number;
+  slug: string;
   title: string;
 };

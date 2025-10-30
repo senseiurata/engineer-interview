@@ -3,17 +3,19 @@ import type { TodoItem as TodoItemType } from "./types";
 
 function TodoSection({
   title,
+  slug,
   todoItems,
   handleMovePrevious,
   handleMoveNext,
 }: {
   title: string;
+  slug: string;
   todoItems: TodoItemType[];
   handleMovePrevious?: Function;
   handleMoveNext?: Function;
 }) {
   return (
-    <section>
+    <section data-testid={`todo-section-${slug}`}>
       <h2>{title}</h2>
 
       {todoItems.map((item: TodoItemType) => (

@@ -6,14 +6,17 @@ import type { TodoItem, TodoSection as TodoSectionType } from "./types";
 const todoSections: TodoSectionType[] = [
   {
     id: 1,
+    slug: "todo",
     title: "Todo",
   },
   {
     id: 2,
+    slug: "in-progress",
     title: "In Progress",
   },
   {
     id: 3,
+    slug: "done",
     title: "Done",
   },
 ];
@@ -150,10 +153,14 @@ function TodoApp() {
     <div>
       <div className="flex gap-1">
         {todoSections.map(
-          ({ id, title }: { id: number; title: string }, index: number) => {
+          (
+            { id, title, slug }: { id: number; title: string; slug: string },
+            index: number,
+          ) => {
             return (
               <TodoSection
                 key={id}
+                slug={slug}
                 title={title}
                 todoItems={sectionIdToItems.get(id) ?? []}
                 handleMovePrevious={
@@ -169,6 +176,7 @@ function TodoApp() {
       </div>
       <form onSubmit={handleAddTodo}>
         <input
+          required
           onChange={(e: ChangeEvent<HTMLInputElement>) =>
             setNewTodo(e.target.value)
           }
