@@ -173,14 +173,14 @@ function TodoApp() {
           onChange={(e: ChangeEvent<HTMLInputElement>) =>
             setNewTodo(e.target.value)
           }
-          data-testid="add-todo-input"
+          data-testid="todo-app__add-todo-input"
           name="todo"
           placeholder="Add Task"
           value={newTodo}
         />
         <button
           aria-label="Add todo"
-          data-testid="add-todo-btn"
+          data-testid="todo-app__add-todo-btn"
           className="px-6 py-2 text-lg rounded-lg bg-blue-600 text-white"
         >
           +

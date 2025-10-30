@@ -8,8 +8,8 @@ describe("TodoApp", () => {
   });
 
   it("can add todo item", () => {
-    const addTodoInputField = screen.getByTestId("add-todo-input");
-    const addTodoBtn = screen.getByTestId("add-todo-btn");
+    const addTodoInputField = screen.getByTestId("todo-app__add-todo-input");
+    const addTodoBtn = screen.getByTestId("todo-app__add-todo-btn");
     fireEvent.change(addTodoInputField, { target: { value: "Test Add Todo" } });
     fireEvent.click(addTodoBtn);
     expect(screen.getByText("Test Add Todo")).toBeInTheDocument();
@@ -17,8 +17,8 @@ describe("TodoApp", () => {
 
   describe("w/ added item", () => {
     beforeEach(() => {
-      const addTodoInputField = screen.getByTestId("add-todo-input");
-      const addTodoBtn = screen.getByTestId("add-todo-btn");
+      const addTodoInputField = screen.getByTestId("todo-app__add-todo-input");
+      const addTodoBtn = screen.getByTestId("todo-app__add-todo-btn");
       fireEvent.change(addTodoInputField, {
         target: { value: "Test Add Todo" },
       });
@@ -42,7 +42,7 @@ describe("TodoApp", () => {
         assert.fail("Test todo not found");
       }
 
-      const prevBtn = within(testTodo).queryByTestId("prev-btn");
+      const prevBtn = within(testTodo).queryByTestId("todo-item__prev-btn");
       expect(prevBtn).toHaveAttribute("disabled");
     });
 
@@ -56,15 +56,15 @@ describe("TodoApp", () => {
         assert.fail("Test todo not found");
       }
 
-      const nextBtn = within(testTodo).queryByTestId("next-btn");
+      const nextBtn = within(testTodo).queryByTestId("todo-item__next-btn");
       expect(nextBtn).not.toHaveAttribute("disabled");
     });
   });
 
   describe("w/ added item moved twice to next section", () => {
     beforeEach(() => {
-      const addTodoInputField = screen.getByTestId("add-todo-input");
-      const addTodoBtn = screen.getByTestId("add-todo-btn");
+      const addTodoInputField = screen.getByTestId("todo-app__add-todo-input");
+      const addTodoBtn = screen.getByTestId("todo-app__add-todo-btn");
       fireEvent.change(addTodoInputField, {
         target: { value: "Test Add Todo" },
       });
@@ -79,7 +79,9 @@ describe("TodoApp", () => {
         assert.fail("Test todo not found in Todo section");
       }
 
-      fireEvent.click(within(testTodoInTodoSection).getByTestId("next-btn"));
+      fireEvent.click(
+        within(testTodoInTodoSection).getByTestId("todo-item__next-btn"),
+      );
 
       const inProgressSection = screen.getByTestId("todo-section-in-progress");
       const testTodoInInProgressSection = within(inProgressSection)
@@ -91,7 +93,7 @@ describe("TodoApp", () => {
       }
 
       fireEvent.click(
-        within(testTodoInInProgressSection).getByTestId("next-btn"),
+        within(testTodoInInProgressSection).getByTestId("todo-item__next-btn"),
       );
     });
 
@@ -112,7 +114,7 @@ describe("TodoApp", () => {
         assert.fail("Test todo not found");
       }
 
-      const prevBtn = within(testTodo).getByTestId("prev-btn");
+      const prevBtn = within(testTodo).getByTestId("todo-item__prev-btn");
       expect(prevBtn).not.toHaveAttribute("disabled");
     });
 
@@ -126,7 +128,7 @@ describe("TodoApp", () => {
         assert.fail("Test todo not found");
       }
 
-      const nextBtn = within(testTodo).getByTestId("next-btn");
+      const nextBtn = within(testTodo).getByTestId("todo-item__next-btn");
       expect(nextBtn).toHaveAttribute("disabled");
     });
   });

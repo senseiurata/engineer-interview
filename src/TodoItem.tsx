@@ -19,7 +19,7 @@ function TodoItem({
         onClick={handleMovePrevious?.(id)}
         aria-label="Move to previous"
         disabled={!handleMovePrevious}
-        data-testid="prev-btn"
+        data-testid="todo-item__prev-btn"
       >
         &larr;
       </button>
@@ -29,7 +29,7 @@ function TodoItem({
         onClick={handleMoveNext?.(id)}
         aria-label="Move to next"
         disabled={!handleMoveNext}
-        data-testid="next-btn"
+        data-testid="todo-item__next-btn"
       >
         &rarr;
       </button>
