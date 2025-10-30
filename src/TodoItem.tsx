@@ -10,8 +10,12 @@ function TodoItem({
   handleMoveNext?: Function;
 }) {
   return (
-    <div data-testid="todo-item" className="flex gap-3">
+    <div
+      data-testid="todo-item"
+      className="flex items-center gap-3 p-2 rounded-md shadow-md shadow-gray-400"
+    >
       <button
+        className="px-1 py-2 flex-none text-xl rounded-md shadow-md shadow-gray-400 bg-red-700 text-white disabled:opacity-40"
         onClick={handleMovePrevious?.(id)}
         aria-label="Move to previous"
         disabled={!handleMovePrevious}
@@ -19,8 +23,9 @@ function TodoItem({
       >
         &larr;
       </button>
-      {name}
+      <span className="flex-auto text-sm text-center">{name}</span>
       <button
+        className="px-1 py-2 flex-none text-xl rounded-md shadow-md shadow-gray-400 bg-green-700 text-white disabled:opacity-40"
         onClick={handleMoveNext?.(id)}
         aria-label="Move to next"
         disabled={!handleMoveNext}

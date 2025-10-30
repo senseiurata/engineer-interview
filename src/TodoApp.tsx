@@ -150,33 +150,39 @@ function TodoApp() {
   };
 
   return (
-    <div>
-      <div className="flex gap-1">
-        {todoSections.map(
-          (
-            { id, title, slug }: { id: number; title: string; slug: string },
-            index: number,
-          ) => {
-            return (
-              <TodoSection
-                key={id}
-                slug={slug}
-                title={title}
-                todoItems={sectionIdToItems.get(id) ?? []}
-                handleMovePrevious={
-                  index !== 0 ? handleMovePrevious : undefined
-                }
-                handleMoveNext={
-                  index !== todoSections.length - 1 ? handleMoveNext : undefined
-                }
-              />
-            );
-          },
-        )}
+    <div className="p-7">
+      <div>
+        <ol className="list-none flex flex-wrap gap-6">
+          {todoSections.map(
+            (
+              { id, title, slug }: { id: number; title: string; slug: string },
+              index: number,
+            ) => {
+              return (
+                <li key={id} className="flex-none">
+                  <TodoSection
+                    slug={slug}
+                    title={title}
+                    todoItems={sectionIdToItems.get(id) ?? []}
+                    handleMovePrevious={
+                      index !== 0 ? handleMovePrevious : undefined
+                    }
+                    handleMoveNext={
+                      index !== todoSections.length - 1
+                        ? handleMoveNext
+                        : undefined
+                    }
+                  />
+                </li>
+              );
+            },
+          )}
+        </ol>
       </div>
-      <form onSubmit={handleAddTodo}>
+      <form onSubmit={handleAddTodo} className="mt-6 flex gap-5">
         <input
           required
+          className="border border-black px-5 placeholder:text-sm"
           onChange={(e: ChangeEvent<HTMLInputElement>) =>
             setNewTodo(e.target.value)
           }
@@ -185,7 +191,11 @@ function TodoApp() {
           placeholder="Add Task"
           value={newTodo}
         />
-        <button aria-label="Add todo" data-testid="add-todo-btn">
+        <button
+          aria-label="Add todo"
+          data-testid="add-todo-btn"
+          className="px-6 py-2 text-lg rounded-lg bg-blue-600 text-white"
+        >
           +
         </button>
       </form>
